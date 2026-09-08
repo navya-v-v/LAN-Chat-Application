@@ -1,19 +1,31 @@
 import socket
 import threading
 
-SERVER_IP = input("Enter server IP address: ")
 PORT = 5000
+
+server_ip = input("Enter server IP address: ")
+name = input("Enter your name: ")
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
-    client.connect((SERVER_IP, PORT))
+    client.connect((server_ip, PORT))
     print("\nConnected to the chat server!")
-except:
-    print("\nCould not connect to the server.")
+    print("Type 'exit' to leave the chat.\n")
+
+except ConnectionRefusedError:
+    print("\nConnection refused.")
+    print("Make sure the server is running.")
     exit()
 
-name = input("Enter your name: ")
+except socket.timeout:
+    print("\nConnection timed out.")
+    exit()
+
+except OSError:
+    print("\nCould not connect to the server.")
+    print("Check the server IP address.")
+    exit()
 
 
 def receive_messages():
@@ -22,13 +34,13 @@ def receive_messages():
             message = client.recv(1024)
 
             if not message:
+                print("\nServer disconnected.")
                 break
 
-            print("\n" + message.decode())
-            print("You: ", end="")
+            print(f"\n{message.decode()}")
+            print("You: ", end="", flush=True)
 
         except:
-            print("\nDisconnected from server.")
             break
 
 
@@ -48,10 +60,14 @@ while True:
         print("You left the chat.")
         break
 
+    if message.strip() == "":
+        continue
+
     full_message = f"{name}: {message}"
 
     try:
         client.send(full_message.encode())
+
     except:
-        print("Message could not be sent.")
+        print("\nCould not send message.")
         break
