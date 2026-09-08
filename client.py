@@ -1,5 +1,6 @@
 import socket
 import threading
+from datetime import datetime
 
 PORT = 5000
 
@@ -28,7 +29,13 @@ except OSError:
     exit()
 
 
+def get_timestamp():
+    """Return the current time."""
+    return datetime.now().strftime("%H:%M:%S")
+
+
 def receive_messages():
+    """Receive messages from the server."""
     while True:
         try:
             message = client.recv(1024)
@@ -63,7 +70,9 @@ while True:
     if message.strip() == "":
         continue
 
-    full_message = f"{name}: {message}"
+    timestamp = get_timestamp()
+
+    full_message = f"[{timestamp}] {name}: {message}"
 
     try:
         client.send(full_message.encode())
