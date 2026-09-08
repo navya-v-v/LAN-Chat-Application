@@ -8,16 +8,17 @@ clients = []
 
 
 def broadcast(message, sender):
+    """Send a message to all connected clients except the sender."""
     for client in clients:
         if client != sender:
             try:
                 client.send(message)
             except:
-                if client in clients:
-                    clients.remove(client)
+                clients.remove(client)
 
 
 def handle_client(client, address):
+    """Handle messages from one connected client."""
     print(f"[CONNECTED] {address}")
 
     while True:
@@ -27,7 +28,9 @@ def handle_client(client, address):
             if not message:
                 break
 
-            print(f"{address}: {message.decode()}")
+            decoded_message = message.decode()
+
+            print(f"{address}: {decoded_message}")
 
             broadcast(message, client)
 
