@@ -1,45 +1,35 @@
-# 🌐 LAN-Based Client-Server Chat Application
+# LAN-Based Client-Server Chat Application
 
-A simple networking project that allows multiple computers connected to the same Local Area Network (LAN) to communicate with each other using Python socket programming.
+A simple real-time chat application built using Python socket programming and multithreading.
 
-## 📌 Project Description
+This project allows multiple clients connected to the same Local Area Network (LAN) to communicate with each other through a central server.
 
-This project demonstrates basic computer networking using a client-server architecture.
+## 📌 Project Overview
 
-The server waits for clients to connect. Multiple clients can connect to the server and exchange messages through the server.
+The LAN Chat Application follows a client-server architecture.
 
-## 🎯 Objective
-
-The main objective of this project is to understand:
-
-- Client-server architecture
-- IP addresses
-- Port numbers
-- TCP communication
-- Socket programming
-- Sending and receiving data
-- Multithreading
-- LAN communication
+- The **server** accepts multiple client connections.
+- Each client runs independently.
+- The server receives messages from clients.
+- The server broadcasts messages to all other connected clients.
+- TCP sockets are used for reliable communication.
+- Multithreading allows multiple clients to communicate at the same time.
 
 ## 🛠️ Technologies Used
 
 - Python
 - Socket Programming
-- TCP
+- TCP/IP
 - Multithreading
-- GitHub
+- Git & GitHub
 
-## 🏗️ Project Architecture
+## 📂 Project Structure
 
 ```text
-             LAN NETWORK
-                  |
-          +-------+-------+
-          |               |
-      Client 1        Client 2
-          |               |
-          +-------+-------+
-                  |
-               Server
-                  |
-          Message Handling
+LAN-Chat-Application/
+│
+├── client.py
+├── server.py
+├── requirements.txt
+├── README.md
+└── .gitignore
